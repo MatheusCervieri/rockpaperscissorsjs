@@ -28,9 +28,15 @@ function computerPlay(){
         return "Scissors";
     }
  }
-
+ const player1playdiv = document.querySelector("#player1playdiv");
+ const player2playdiv = document.querySelector("#player2playdiv");
 function playRound (computerplay, player1play){
     let resultado;
+    
+    player1playdiv.textContent = 'The Player 1 Play is  ' + showPlay(player1play) + '!';
+   
+    player2playdiv.textContent = 'The Computer Play is  ' + showPlay(computerplay) + '!';
+    
     console.log("The Computer Play is: ");
     console.log(showPlay(computerplay));
     console.log("The Player1 Play is ");
@@ -59,6 +65,8 @@ function playRound (computerplay, player1play){
     }
 
     console.log(resultado);
+   
+  
     return resultado;
 }
     function game(rounds){
@@ -101,4 +109,57 @@ function playRound (computerplay, player1play){
       }
      
     }
-    game(5);
+
+function clicoubotao (e){
+    console.log(e);    
+}
+
+    const buttons = document.querySelectorAll('button');
+    const winnerdiv = document.querySelector("#winnerdiv");
+    const scorediv = document.querySelector("#scorediv");
+    let scorePlayer1 = 0;
+    let scoreComputer = 0;
+    // we use the .forEach method to iterate through each button
+    
+  
+ 
+    buttons.forEach((button) => {
+    
+      // and for each one we add a 'click' listener
+    button.addEventListener('click', () => {
+    let resultado = playRound(computerPlay(), button.id);
+    console.log(resultado);
+    const awinnerdiv = document.querySelector("#winnerdiv");
+    awinnerdiv.textContent = resultado;
+    if (resultado == "Player1 Win") {
+        scorePlayer1++;
+        console.log("Player 1 won this round");
+   }
+   else if (resultado == "Computer Win"){
+       scoreComputer++;
+       console.log("Computer won this round");
+   }
+   else{
+       console.log("This round is tied");
+   }
+   
+    scorediv.textContent = "The Player 1 Score is " + scorePlayer1 + " " + "The Computer Score is " + scoreComputer;  
+    
+    if (scorePlayer1 == 5 || scoreComputer == 5){
+        console.log("the game is finished");
+        if (scorePlayer1 > scoreComputer){
+        scorediv.textContent = "The Player1 Wons the game";
+        }
+        else{
+        scorediv.textContent = "The Computer Wons the game";
+        }
+        scorePlayer1 = 0;
+        scoreComputer = 0;
+        player1playdiv.textContent = "The Game is Finished";
+        player2playdiv.textContent = "The Game is Finished";
+        winnerdiv.textContent = "The Game is Finished";
+     
+    }      
+});
+    });
+
